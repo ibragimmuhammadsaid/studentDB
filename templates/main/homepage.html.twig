@@ -1,0 +1,57 @@
+{% extends base.html.twig %}
+
+
+{% block body %}
+<style>
+    h1 {
+        text-align:center;
+    }
+    p {
+        text-align:center;
+    }
+    table {
+        margin-left:auto;
+        margin-right:auto;
+        text-align:center;
+        border: 2px solid black;
+        border-collapse:collapse;
+    }
+    th {
+        width:150;
+    }
+    h2 {
+        text-align:center;
+    }
+</style>
+
+<h1> Hello World! </h1>>
+
+<div> 
+    <p> My name is {{name}} </p>
+
+    {% if name == 'Muhammad Said' %}
+        {# Says the name is good #}
+        <p> His name's good! </p>
+
+    {% endif %}
+</div>
+
+<div>
+    <h2> Data about this student </h2>
+    <table> 
+        <tr>
+            <th> Name </th>
+            <th> ID </th>
+            <th> Year </th>
+            <th> Status </th>
+        </tr>
+        <tr>
+            <td> {{ name }} </td>
+            <td> {{ studentInfo.ID }} </td>
+            <td> {{ studentInfo.Year }} </td>
+            <td> {{ studentInfo.Status }} </td>
+        </tr>
+    </table>
+</div>
+
+{% endblock body %}
