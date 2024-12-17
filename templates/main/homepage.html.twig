@@ -1,57 +1,89 @@
-{% extends base.html.twig %}
+{% extends 'base.html.twig' %}
 
+{% block title %}Student Database{% endblock %}
 
 {% block body %}
-<style>
-    h1 {
-        text-align:center;
-    }
-    p {
-        text-align:center;
-    }
-    table {
-        margin-left:auto;
-        margin-right:auto;
-        text-align:center;
-        border: 2px solid black;
-        border-collapse:collapse;
-    }
-    th {
-        width:150;
-    }
-    h2 {
-        text-align:center;
-    }
-</style>
+    <main class="flex flex-col lg:flex-row">
+        <aside
+            class="pb-8 lg:pb-0 lg:w-[411px] shrink-0 lg:block lg:min-h-screen text-white transition-all overflow-hidden px-8 border-b lg:border-b-0 lg:border-r border-white/20"
+        >
+            <div class="flex justify-between mt-11 mb-7">
+                <h2 class="text-[32px] font-semibold"> Coursemates </h2>
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 448 512"><path fill="#fff" d="M384 96c0-17.7 14.3-32 32-32s32 14.3 32 32V416c0 17.7-14.3 32-32 32s-32-14.3-32-32V96zM9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L109.3 224 288 224c17.7 0 32 14.3 32 32s-14.3 32-32 32l-178.7 0 73.4 73.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128z"/></svg>
+                </button>
+            </div>
 
-<h1> Hello World! </h1>>
+            {% for student in info %}
+            <div>
+                <div class="flex flex-col space-y-1.5">
+                    <div class="rounded-2xl py-1 px-3 flex justify-center w-32 items-center" style="background: rgba(255, 184, 0, .1);">
+                        <div class="rounded-full h-2 w-2 bg-amber-400 blur-[1px] mr-2"></div>
+                        <p class="uppercase text-xs"> {{ student.statusString }} </p>
+                    </div>
+                    <h3 class="tracking-tight text-[22px] font-semibold">
+                        <a class="hover:underline" href="{{ path('students_show', {
+                            id: student.id
+                        }) }}">{{ student.name }}</a>
+                    </h3>
+                </div>
+                <div class="flex mt-4">
+                    <div class="border-r border-white/20 pr-8">
+                        <p class="text-slate-400 text-xs">ID</p>
+                        <p class="text-xl">{{ student.id }}</p>
+                    </div>
 
-<div> 
-    <p> My name is {{name}} </p>
+                    <div class="pl-8">
+                        <p class="text-slate-400 text-xs">Year</p>
+                        <p class="text-xl">{{ student.year }}</p>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            {% endfor %}
+        </aside>
 
-    {% if name == 'Muhammad Said' %}
-        {# Says the name is good #}
-        <p> His name's good! </p>
+        <div class="px-12 pt-10 w-full">
+            <h1 class="text-4xl font-semibold mb-8">
+                You
+            </h1>
 
-    {% endif %}
-</div>
+            <div class="space-y-5">
+                <!-- Muhammad Said -->
+                    <div class="bg-[#d4af37] rounded-2xl pl-5 py-5 pr-11 flex flex-col min-[1174px]:flex-row min-[1174px]:justify-between">
+                        <div class="flex justify-center min-[1174px]:justify-start">
+                            <img class="h-[83px] w-[84px]" src={{ asset('images/reading-book.png') }} alt="education logo">
+                            <div class="ml-5">
+                                <div class="rounded-2xl py-1 px-3 flex justify-center w-32 items-center bg-amber-400/10">
+                                    <div class="rounded-full h-2 w-2 bg-amber-400 blur-[1px] mr-2"></div>
+                                    <p class="uppercase text-xs text-nowrap"> studying </p>
+                                </div>
+                                <h4 class="text-[22px] pt-1 font-semibold">
+                                    <a class="hover:text-white" href="/students/220299">
+                                       Muhammad Said
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="flex justify-center min-[1174px]:justify-start mt-2 min-[1174px]:mt-0 shrink-0">
+                            <div class="border-r border-white/20 pr-8">
+                                <p class="text-white text-xs">ID</p>
+                                <p class="text-xl">220299</p>
+                            </div>
 
-<div>
-    <h2> Data about this student </h2>
-    <table> 
-        <tr>
-            <th> Name </th>
-            <th> ID </th>
-            <th> Year </th>
-            <th> Status </th>
-        </tr>
-        <tr>
-            <td> {{ name }} </td>
-            <td> {{ studentInfo.ID }} </td>
-            <td> {{ studentInfo.Year }} </td>
-            <td> {{ studentInfo.Status }} </td>
-        </tr>
-    </table>
-</div>
+                            <div class="pl-8 w-[100px]">
+                                <p class="text-white text-xs">Year</p>
+                                <p class="text-xl">3</p>
+                            </div>
+                        </div>
+                    </div>
+                <!-- end text -->
+            </div>
 
-{% endblock body %}
+            <p class="text-lg mt-5 text-center md:text-left">
+                Need to change data?
+                <a href="#" class="underline font-semibold">Edit info.</a>
+            </p>
+        </div>
+    </main>
+{% endblock %}

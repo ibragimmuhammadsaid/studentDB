@@ -2,24 +2,24 @@
 
 namespace App\Controller;
 
+use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
-    #[Route('/')]
-    public function homepage(): Response
+    #[Route('/', name: 'app_homepage')]
+    public function homepage(StudentRepository $studentRepository): Response
     {
-        $myName = 'Muhammad Said';
+        $students = $studentRepository->findAll();
+        $studentCount = count($students);
 
-        $studentInfo = ['ID' => 220299,
-        'Year' => 3,
-        'Status' => 'studying'];
+        $myInfo = $students[array_rand($students)];
 
         return $this->render('main/homepage.html.twig', [
-            'name' => $myName,
-            'studentInfo' => $studentInfo,
+            'info' => $students,
+            'studentCount' => $studentCount
         ]);
     }
 }
