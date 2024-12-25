@@ -2,100 +2,42 @@
 
 namespace App\Repository;
 
-use Psr\Log\LoggerInterface;
-use App\Model\students;
-use App\Model\studentStatusEnum;
+use App\Entity\Student;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class StudentRepository
+/**
+ * @extends ServiceEntityRepository<Student>
+ */
+class StudentRepository extends ServiceEntityRepository
 {
-    public function __construct(
-        private LoggerInterface $logger,
-    ) {
-
-    }
-
-    public function findAll(): array
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->logger->info('Name');
-
-        return $students = 
-        [
-            new students(
-                'Muhammad Said Ibragim',
-                220299,
-                3,
-                studentStatusEnum::STUDYING,
-            ),
-            new students(
-                'Abdullokh Rakhimjonov',
-                220333,
-                3,
-                studentStatusEnum::STUDYING,
-            ),
-            new students(
-                'Mahmudbek Sultonmuratov',
-                220222,
-                3,
-                studentStatusEnum::NOT_STUDYING,
-            ),
-            new students(
-                'Shaxzodbek Safarov',
-                220978,
-                3,
-                studentStatusEnum::NOT_STUDYING
-            ),
-            new students(
-                'Abror Musaxanov',
-                220763,
-                2,
-                studentStatusEnum::NOT_STUDYING
-            ),
-            new students(
-                'Artem Say',
-                220748,
-                3,
-                studentStatusEnum::STUDYING
-            ),
-            new students(
-                'Hamas XXX',
-                230558,
-                2,
-                studentStatusEnum::PLANNING_TO_TRANSFER
-            ),
-            new students(
-                'Karina Asanova',
-                220585,
-                3,
-                studentStatusEnum::STUDYING
-            ),
-            new students(
-                'Usman Inogamov',
-                220937,
-                3,
-                studentStatusEnum::NOT_STUDYING
-            ),
-            new students(
-                'Alsu Khabibullina',
-                220878,
-                3,
-                studentStatusEnum::STUDYING
-            ),
-            new students(
-                'Mikhail Kim',
-                220800,
-                3,
-                studentStatusEnum::STUDYING
-            )
-        ];
+        parent::__construct($registry, Student::class);
     }
 
-    public function find(int $id): ?students
-    {
-        foreach ($this->findAll() as $student) {
-            if($student->getID() == $id) {
-                return $student; 
-            }
-        }
-        return null;
-    }
+    //    /**
+    //     * @return Student[] Returns an array of Student objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('s.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Student
+    //    {
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
