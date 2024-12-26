@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Student Edit {% endblock %}
+{% block title %} Student {{ student.id }} {% endblock %}
 
 {% block body %}
+
+<!-- Return to homepage -->
 <div class="my-4 px-8">
     <a class="bg-amber-400 hover:bg-gray-200 rounded-xl p-2 text-black font-semibold" href="{{ path('app_homepage') }}">
         <svg class="inline text-black" xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"> <path fill="#000" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
@@ -17,27 +19,49 @@
 
     {{ form_start(form) }}
 
+    <!-- Enter student name -->
     <div class="flex justify-between">
     {{ form_label(form.name) }}
-    {{ form_widget(form.name, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3'} }) }}
+    <div class="text-red-500">
+            {{ form_errors(form.name) }}
+        </div>
+    {{ form_widget(form.name, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3', 
+                                        'pattern':'^[a-zA-Z\\s]+$', 
+                                        'title': 'Please enter name'} }) }}
     </div>
 
+    <!-- Enter student id -->
     <div class="flex justify-between">
     {{ form_label(form.id) }}
-    {{ form_widget(form.id, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3'} }) }}
+    {{ form_widget(form.id, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3',
+                            'pattern': '[0-9]{6}',
+                            'title':'There has to be 6 digits' } }) }}
+    </div>
+    <div class="text-red-500">
+        {{ form_errors(form.id) }}
     </div>
 
+    <!-- Enter student year -->
     <div class="flex justify-between">
     {{ form_label(form.year) }}
-    {{ form_widget(form.year, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3'} }) }}
+    {{ form_widget(form.year, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3',
+                            'pattern': '[0-6]{1}',
+                            'title':'1 digit and less than 6'} }) }}
     </div>
-    {{ form_errors(form.year) }}
+    <div class="text-red-500">
+        {{ form_errors(form.year) }}
+    </div>
 
+    <!-- Enter student status -->
     <div class="flex justify-between">
     {{ form_label(form.status) }}
     {{ form_widget(form.status, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3'} }) }}
     </div>
+    <div class="text-red-500">
+        {{ form_errors(form.status) }}
+    </div>
 
+    <!-- Submit -->
     <div class="bg-amber-300 rounded-2xl text-center text-black font-semibold p-3">
         {{ form_row(form.submit) }}
     </div>

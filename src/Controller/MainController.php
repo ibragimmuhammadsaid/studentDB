@@ -15,13 +15,11 @@ class MainController extends AbstractController
         StudentRepository $studentRepository,
         weather $weather,
     ): Response {
-
         $students = $studentRepository->findAll();
-        $studentCount = count($students);
 
+        # Render
         return $this->render('main/homepage.html.twig', [
             'info' => $students,
-            'studentCount' => $studentCount,
             'weather' => $weather,
         ]);
     }

@@ -20,11 +20,14 @@
                     </a>
 
                      <a href={{ path('app_homepage') }}> <h1 class="text-4xl h-[42] flex space-x-1 font-semibold"> Student Database </h1> </a>
+
+                     <!-- Weather API Implementation -->
                      <div class="bg-[#FF0D86] rounded-2xl pl-5 py-5 pr-11 flex flex-col min-[1174px]:flex-row min-[1174px]:justify-between items-center">
                 Current Weather  {{ weather.temp }} °C
                 <img class="max-h-[50px] md:max-h-[50px] ml-8" src="{{ asset(weather.getStatusWeatherFileName) }}" alt="weather logo">
             </div>
 
+            <!-- Website Navigation -->
                     <nav class="flex space-x-4 font-semibold"> 
                         <a class="hover:text-amber-400 pt-2" href="{{ path('app_homepage') }}">
                             Home

@@ -23,12 +23,30 @@ class StudentController extends AbstractController
         EntityManagerInterface $entityManager,
         int $id,
         weather $weather,
+        Request $request,
     ) {
         $student = $entityManager->getRepository(Student::class)->find($id);
 
+        # Student Deletion Button
+        $form = $this->createFormBuilder()
+            ->add('delete', SubmitType::class, ['label' => false])
+            ->setMethod('POST')
+            ->getForm();
+        $form->handleRequest($request);
+
+        # Deletion Form Check
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->remove($student);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage');
+        }
+
+        # Render
         return $this->render('show.html.twig', [
             'student' => $student,
-            'weather' => $weather
+            'weather' => $weather,
+            'form' => $form,
         ]);
     }
 
@@ -38,17 +56,23 @@ class StudentController extends AbstractController
         weather $weather,
         Request $request,
     ): Response {
+        # Object init and Form
         $student = new Student();
         $form = $this->createFormBuilder($student)
             ->add('name', TextType::class)
-            ->add('id', IntegerType::class)
-            ->add('year', IntegerType::class)
+            ->add('id', TextType::class)
+            ->add('year', TextType::class)
             ->add('status', EnumType::class, ['class' => studentStatusEnum::class])
             ->add('submit', SubmitType::class)
             ->getForm();
 
+        # Pattern requires TextType, but I invert back to int just in case
+        $id = (int) $form->get('id')->getData();
+        $year = (int) $form->get('year')->getData();
+
+        # Form Submission and Redirection
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($student);
             $entityManager->flush();
@@ -56,48 +80,50 @@ class StudentController extends AbstractController
             return $this->redirectToRoute('app_homepage');
         }
 
-        
-
+        # Render
         return $this->render('createstudent.html.twig', [
             'weather' => $weather,
             'form' => $form,
         ]);
     }
 
-    // #[Route('/student/{id}/edit', name:'edit_student')]
-    // public function editStudent(
-    //     EntityManagerInterface $entityManager,
-    //     weather $weather,
-    //     Request $request,
-    //     int $id,
-    //     ): Response
-    // {
-    //     $editStudent = $entityManager->getRepository(Student::class)->find($id);
-
-    //     $student = new Student();
-    //     $form = $this->createFormBuilder($student)
-    //         ->add('name', TextType::class)
-    //         ->add('id', IntegerType::class)
-    //         ->add('year', IntegerType::class)
-    //         ->add('status', EnumType::class, ['class' => studentStatusEnum::class])
-    //         ->add('submit', SubmitType::class)
-    //         ->getForm();
-
-    //     $form->handleRequest($request);
-        
-    //     if ($form->isSubmitted() && $form->isValid()) {
-
-    //         return $this->redirectToRoute('students_show');
-    //     }
-
-    //     return $this->render('editstudent.html.twig', [
-    //         'weather' => $weather,
-    //         'form' => $form,
-    //         ]);
-    // }
-
-    public function deleteStudent()
+    #[Route('/student/{id}/edit', name:'edit_student')]
+    public function editStudent(
+        EntityManagerInterface $entityManager,
+        Weather $weather,
+        Request $request,
+        int $id,
+    ): Response
     {
+        $student = $entityManager->getRepository(Student::class)->find($id);
 
+        $form = $this->createFormBuilder($student)
+            ->add('name', TextType::class)
+            ->add('id', TextType::class)
+            ->add('year', TextType::class)
+            ->add('status', EnumType::class, ['class' => studentStatusEnum::class])
+            ->add('submit', SubmitType::class)
+            ->getForm();
+
+        # Pattern requires TextType, but I invert back to int just in case
+        $id = (int) $form->get('id')->getData();
+        $year = (int) $form->get('year')->getData();
+
+        # Form Submission and Redirection
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($student);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage');
+        }
+
+        # Render
+        return $this->render('editstudent.html.twig', [
+            'weather' => $weather,
+            'form' => $form,
+            'student' => $student,
+        ]);
     }
 }
