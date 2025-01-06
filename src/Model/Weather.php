@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class weather
+class Weather
 {
     private float $temperature = 0.0;
 
@@ -14,7 +14,7 @@ class weather
         #$response = $client->request('GET', 'https://api.open-meteo.com/v1/forecast?latitude=41.2647&longitude=69.2163&current=temperature_2m');
         #$weatherData = $response->toArray();
         #$this->temperature = $weatherData['current']['temperature_2m'];
-        $this->temperature = 20;
+        $this->temperature = -2.3;
     }
 
     public function getTemp(): float

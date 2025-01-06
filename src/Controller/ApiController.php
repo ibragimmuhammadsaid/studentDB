@@ -25,7 +25,7 @@ class ApiController extends AbstractController
 
         if(!$students)
         {
-            throw $this->createNotFoundException("ID was not found!");
+            throw $this->createNotFoundException(message: "ID was not found!");
         }
 
         return $this->json($students);

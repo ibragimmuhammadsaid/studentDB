@@ -12,58 +12,68 @@
     </a>
 </div>
 
-<main class="flex flex-col items-center h-screen">
+<main class="flex flex-col items-center">
 
-<div class="rounded-2xl p-6 flex-col min-[1174px]:justify-between bg-sky-500 text-black text-2xl">
-    <h1 class="text-3xl text-center text-amber-300 font-semibold mb-3"> Add student </h1>
+<div class="md:flex justify-center space-x-3 mt-5 px-4 lg:px-8">
+    <div class="flex justify-center">
+        
+    </div>
+    <div class="space-y-5">
+        <div class="mt-8 max-w-xl mx-auto">
+        
+    <h1 class="text-3xl text-center text-white font-semibold mb-8"> Add Student </h1>
 
     {{ form_start(form) }}
 
-    <!-- Enter student name -->
-    <div class="flex justify-between">
-    {{ form_label(form.name) }}
-    <div class="text-red-500">
-            {{ form_errors(form.name) }}
-        </div>
-    {{ form_widget(form.name, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3', 
-                                        'pattern':'^[a-zA-Z\\s]+$', 
-                                        'title': 'Please enter name'} }) }}
-    </div>
-
-    <!-- Enter student id -->
-    <div class="flex justify-between">
-    {{ form_label(form.id) }}
-    {{ form_widget(form.id, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3',
-                            'pattern': '[0-9]{6}',
-                            'title':'There has to be 6 digits' } }) }}
-    </div>
-    <div class="text-red-500">
-        {{ form_errors(form.id) }}
-    </div>
-
-    <!-- Enter student year -->
-    <div class="flex justify-between">
-    {{ form_label(form.year) }}
-    {{ form_widget(form.year, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3',
-                            'pattern': '[0-6]{1}',
-                            'title':'1 digit and less than 6'} }) }}
-    </div>
-    <div class="text-red-500">
-        {{ form_errors(form.year) }}
-    </div>
-
     <!-- Enter student status -->
-    <div class="flex justify-between">
-    {{ form_label(form.status) }}
-    {{ form_widget(form.status, {'attr': {'class':'text-black rounded-2xl rounded-lg pl-3 mb-3'} }) }}
+    <div>
+    {{ form_widget(form.status, {'attr': {'class':'rounded-2xl py-1 px-3 flex justify-center w-46 items-center mb-5',
+                                        'style':'background: rgba(85, 84, 81, 0.1);'} }) }}
     </div>
     <div class="text-red-500">
         {{ form_errors(form.status) }}
     </div>
+    <!-- End Enter student status -->
+
+    <!-- Enter student data -->
+    <div class="flex flex-col mb-3">
+    {{ form_label(form.name) }}
+    {{ form_widget(form.name, {'attr': {'class':'text-[32px] font-semibold border-b border-white/10 pb-5 mb-5', 
+                                        'pattern':'^[a-zA-Z\\s]+$', 
+                                        'title': 'Please enter name',
+                                        'style':'background: rgba(85, 84, 81, 0.1);'} }) }}
+    <div class="text-red-500">
+        {{ form_errors(form.name) }}
+    </div>
+
+    {{ form_label(form.id) }}
+    {{ form_widget(form.id, {'attr': {'class':'text-[16px] text-slate-300 font-semibold mt-2 h-8 uppercase mb-5',
+                            'pattern': '[0-9]{6}',
+                            'title':'There has to be 6 digits',
+                            'style':'background: rgba(85, 84, 81, 0.1);' } }) }}
+
+    {{ form_label(form.year) }}
+    {{ form_widget(form.year, {'attr': {'class':'text-[16px] text-slate-300 font-semibold mt-2 h-8 uppercase mb-5',
+                            'pattern': '[0-6]{1}',
+                            'title':'1 digit and less than 6',
+                            'style':'background: rgba(85, 84, 81, 0.1);'} }) }}
+    </div>
+
+    <div class="text-red-500">
+        {{ form_errors(form.id) }}
+    </div>
+    
+    <div class="text-red-500">
+        {{ form_errors(form.year) }}
+    </div>
+
+    <!-- Enter student data -->
+    
+    
 
     <!-- Submit -->
     <div class="bg-amber-300 rounded-2xl text-center text-black font-semibold p-3">
-        {{ form_row(form.submit) }}
+        {{ form_row(form.submit, {'label': 'Create'}) }}
     </div>
 
     {{ form_end(form) }}

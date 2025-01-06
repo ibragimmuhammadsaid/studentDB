@@ -12,7 +12,7 @@ class ExampleController extends AbstractController
     #[Route('/example', name: 'app_example')]
     public function show(weather $weather): Response
     {
-        $student;
+        
 
         return $this->render('example.html.twig',[
             'weather' => $weather,
