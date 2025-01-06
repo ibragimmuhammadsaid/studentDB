@@ -18,7 +18,7 @@ class ApiController extends AbstractController
         return $this->json($student);
     }
 
-    #[Route('/api/students/{id}', methods: ['GET'])]
+    #[Route('/api/student/{id}', methods: ['GET'])]
     public function get(int $id, StudentRepository $repository): Response
     {
         $student = $repository->find($id);

@@ -54,7 +54,7 @@ class StudentController extends AbstractController
 
         $form = $this->createForm(StudentType::class, $student);
 
-        # Pattern requires TextType, but I invert back to int just in case
+        # Pattern in twig requires TextType, but I invert back to int just in case
         $id = (int) $form->get('id')->getData();
         $year = (int) $form->get('year')->getData();
 
@@ -84,7 +84,7 @@ class StudentController extends AbstractController
 
         $form = $this->createForm(StudentType::class, $student);
 
-        # Pattern requires TextType, but I invert back to int just in case
+        # Pattern in twig requires TextType, but I invert back to int just in case
         $id = (int) $form->get('id')->getData();
         $year = (int) $form->get('year')->getData();
 
