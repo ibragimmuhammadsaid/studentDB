@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\Weather;
 use App\Entity\Student;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,8 +18,7 @@ class StudentController extends AbstractController
     public function show(
         EntityManagerInterface $entityManager,
         int $id,
-        Weather $weather,
-        Request $request,
+        Request $request
     ) {
         $student = $entityManager->getRepository(Student::class)->find($id);
 
@@ -40,18 +38,16 @@ class StudentController extends AbstractController
         }
 
         # Render
-        return $this->render('show.html.twig', [
+        return $this->render('student/show.html.twig', [
             'student' => $student,
-            'weather' => $weather,
-            'form' => $form,
+            'form' => $form
         ]);
     }
 
     #[Route('/student-create', name: 'create_student')]
     public function createStudent(
         EntityManagerInterface $entityManager,
-        Weather $weather,
-        Request $request,
+        Request $request
     ): Response {
         # Object initialization and Form
         $student = new Student();
@@ -73,18 +69,16 @@ class StudentController extends AbstractController
         }
 
         # Render
-        return $this->render('createstudent.html.twig', [
-            'weather' => $weather,
-            'form' => $form,
+        return $this->render('student/createstudent.html.twig', [
+            'form' => $form
         ]);
     }
 
     #[Route('/student/{id}/edit', name: 'edit_student')]
     public function editStudent(
         EntityManagerInterface $entityManager,
-        Weather $weather,
         Request $request,
-        int $id,
+        int $id
     ): Response {
         $student = $entityManager->getRepository(Student::class)->find($id);
 
@@ -105,10 +99,9 @@ class StudentController extends AbstractController
         }
 
         # Render
-        return $this->render('editstudent.html.twig', [
-            'weather' => $weather,
+        return $this->render('student/editstudent.html.twig', [
             'form' => $form,
-            'student' => $student,
+            'student' => $student
         ]);
     }
 }
