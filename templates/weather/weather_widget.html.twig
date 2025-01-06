@@ -1,0 +1,4 @@
+<div style="background: rgba(69, 68, 65, 0.1);" class="rounded-2xl pl-5 py-5 pr-11 flex flex-col min-[1174px]:flex-row min-[1174px]:justify-between items-center border border-white/50">
+    Current Weather  {{ weather.getTemp }} °C
+    <img class="max-h-[50px] md:max-h-[50px] ml-8" src="{{ asset(weather.getStatus) }}" alt="weather logo">
+</div>  

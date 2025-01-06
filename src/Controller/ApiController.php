@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Model\students;
+use App\Model\Student;
 use App\Repository\StudentRepository;
 
 class ApiController extends AbstractController
@@ -13,21 +13,21 @@ class ApiController extends AbstractController
     #[Route('/api/students', methods: ['GET'])]
     public function getCollection(StudentRepository $repository): Response
     {
-        $students = $repository->findAll();
+        $student = $repository->findAll();
 
-        return $this->json($students);
+        return $this->json($student);
     }
 
-    #[Route('/api/students/{id}', methods: ['GET'])]
+    #[Route('/api/student/{id}', methods: ['GET'])]
     public function get(int $id, StudentRepository $repository): Response
     {
-        $students = $repository->find($id);
+        $student = $repository->find($id);
 
-        if(!$students)
+        if(!$student)
         {
             throw $this->createNotFoundException(message: "ID was not found!");
         }
 
-        return $this->json($students);
+        return $this->json($student);
     }
 }
