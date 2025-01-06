@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ student.name }} {% endblock %}
+{% block title %} {{ student.getName }} {% endblock %}
 
 {% block body %}
 
@@ -11,6 +11,7 @@
         Back
     </a>
 </div>
+<!-- Back to Homepage -->
 
 <!-- Student Deletion -->
 <div class="my-4 px-8">
@@ -20,6 +21,7 @@
         </button>
     {{ form_end(form) }}
 </div>
+<!-- Student Deletion -->
 
 <!-- Student Edit -->
 <div class="my-4 px-8">
@@ -27,6 +29,7 @@
         Edit
     </a>
 </div>
+<!-- Student Edit -->
 
 <div class="md:flex justify-center space-x-3 mt-5 px-4 lg:px-8">
     <div class="flex justify-center">

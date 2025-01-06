@@ -2,19 +2,16 @@
 
 namespace App\Controller;
 
-use App\Model\weather;
+use App\Model\Weather;
 use App\Entity\Student;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Enum\studentStatusEnum;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use App\Enum\studentStatusEnum;
+use App\Form\StudentType;
 
 class StudentController extends AbstractController
 {
@@ -22,7 +19,7 @@ class StudentController extends AbstractController
     public function show(
         EntityManagerInterface $entityManager,
         int $id,
-        weather $weather,
+        Weather $weather,
         Request $request,
     ) {
         $student = $entityManager->getRepository(Student::class)->find($id);
@@ -53,18 +50,13 @@ class StudentController extends AbstractController
     #[Route('/student-create', name: 'create_student')]
     public function createStudent(
         EntityManagerInterface $entityManager,
-        weather $weather,
+        Weather $weather,
         Request $request,
     ): Response {
-        # Object init and Form
+        # Object initialization and Form
         $student = new Student();
-        $form = $this->createFormBuilder($student)
-            ->add('name', TextType::class)
-            ->add('id', TextType::class)
-            ->add('year', TextType::class)
-            ->add('status', EnumType::class, ['class' => studentStatusEnum::class])
-            ->add('submit', SubmitType::class)
-            ->getForm();
+
+        $form = $this->createForm(StudentType::class, $student);
 
         # Pattern requires TextType, but I invert back to int just in case
         $id = (int) $form->get('id')->getData();
@@ -87,23 +79,16 @@ class StudentController extends AbstractController
         ]);
     }
 
-    #[Route('/student/{id}/edit', name:'edit_student')]
+    #[Route('/student/{id}/edit', name: 'edit_student')]
     public function editStudent(
         EntityManagerInterface $entityManager,
         Weather $weather,
         Request $request,
         int $id,
-    ): Response
-    {
+    ): Response {
         $student = $entityManager->getRepository(Student::class)->find($id);
 
-        $form = $this->createFormBuilder($student)
-            ->add('name', TextType::class)
-            ->add('id', TextType::class)
-            ->add('year', TextType::class)
-            ->add('status', EnumType::class, ['class' => studentStatusEnum::class])
-            ->add('submit', SubmitType::class)
-            ->getForm();
+        $form = $this->createForm(StudentType::class, $student);
 
         # Pattern requires TextType, but I invert back to int just in case
         $id = (int) $form->get('id')->getData();
