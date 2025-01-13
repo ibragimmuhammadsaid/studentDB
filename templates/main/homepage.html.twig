@@ -20,11 +20,11 @@
                             <div class="ml-5">
                                 <div class="rounded-2xl py-1 px-3 flex justify-center w-32 items-center" style="background: rgba(85, 84, 81, 0.1);">
                                     <div class="rounded-full h-2 w-2 bg-green-400 blur-[1px] mr-2"></div>
-                                    <p class="uppercase text-xs text-nowrap"> studying </p>
+                                    <p class="uppercase text-xs text-nowrap"> ONLINE </p>
                                 </div>
                                 <h4 class="text-[22px] pt-1 font-semibold">
                                     <a class="hover:text-white" href="/student/220299">
-                                       Muhammad Said Ibragim
+                                       {{ app.user.userIdentifier }}
                                     </a><div class="bg-amber-400 rounded-2xl pl-5 py-5 pr-11 flex flex-col min-[1174px]:flex-row min-[1174px]:justify-between">
                                         <div class="flex justify">
                                 </h4>
@@ -33,12 +33,18 @@
                         <div class="flex justify-center min-[1174px]:justify-start mt-2 min-[1174px]:mt-0 shrink-0">
                             <div class="border-r border-white/20 pr-8">
                                 <p class="text-white text-xs">ID</p>
-                                <p class="text-xl">220299</p>
+                                <p class="text-xl">{{ app.user.ID }}</p>
                             </div>
 
                             <div class="pl-8 w-[100px]">
-                                <p class="text-white text-xs">Year</p>
-                                <p class="text-xl">3</p>
+                                <p class="text-white text-xs">Role</p>
+                                {% if is_granted('ROLE_DEAN') %}
+                                    <p class="text-xl">Dean</p>
+                                {% elseif is_granted('ROLE_TEACHER') %}
+                                    <p class="text-xl">Teacher</p>
+                                {% else %}
+                                    <p class="text-xl">-</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -46,10 +52,12 @@
             </div>
 
             <!-- Add Student -->
+            {% if is_granted('ROLE_DEAN') %}
             <p class="text-lg mt-5 text-center md:text-left">
                 Want to add student?
                 <a href="/student-create" class="underline font-semibold">Add student.</a>
             </p>
+            {% endif %}
         </div>
     </main>
 {% endblock %}
