@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Enum\studentStatusEnum;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use App\Form\StudentType;
 
 class StudentController extends AbstractController
@@ -20,6 +21,13 @@ class StudentController extends AbstractController
         int $id,
         Request $request
     ) {
+        # Access Control
+        try {
+            $this->denyAccessUnlessGranted('ROLE_DEAN');
+        } catch (AccessDeniedException $e) {
+            return $this->redirectToRoute('app_homepage');
+        }
+        
         $student = $entityManager->getRepository(Student::class)->find($id);
 
         # Student Deletion Button
@@ -49,6 +57,13 @@ class StudentController extends AbstractController
         EntityManagerInterface $entityManager,
         Request $request
     ): Response {
+        # Access Control
+        try {
+            $this->denyAccessUnlessGranted('ROLE_DEAN');
+        } catch (AccessDeniedException $e) {
+            return $this->redirectToRoute('app_homepage');
+        }
+
         # Object initialization and Form
         $student = new Student();
 
@@ -80,6 +95,13 @@ class StudentController extends AbstractController
         Request $request,
         int $id
     ): Response {
+        # Access Control
+        try {
+            $this->denyAccessUnlessGranted('ROLE_DEAN');
+        } catch (AccessDeniedException $e) {
+            return $this->redirectToRoute('app_homepage');
+        }
+
         $student = $entityManager->getRepository(Student::class)->find($id);
 
         $form = $this->createForm(StudentType::class, $student);

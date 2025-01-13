@@ -13,9 +13,9 @@ class MainController extends AbstractController
     public function homepage(
         StudentRepository $studentRepository
     ): Response {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $students = $studentRepository->findAll();
 
-        # Render
         return $this->render('main/homepage.html.twig', [
             'info' => $students
         ]);

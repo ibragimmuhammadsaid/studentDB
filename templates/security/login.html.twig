@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in{% endblock %}
+
+{% block body %}
+<main class="flex flex-col items-center h-screen">
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="text-3xl mb-3 mt-6 flex flex-col">
+                You are logged in as {{ app.user.userIdentifier }} <a class="bg-amber-300 rounded-2xl text-center text-black font-semibold p-3" href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
+        {% if not app.user %}
+        <h1 class="h3 mb-3 font-weight-normal text-3xl mt-5 mb-8">Log in</h1>
+        <label for="username"> Username </label>
+        <input type="text" value="{{ last_username }}" name="_username" style="background: rgba(85, 84, 81, 0.1);" id="username" class="form-control rounded-2xl py-1 px-3 flex justify-center w-46 items-center mb-5" autocomplete="username" required autofocus>
+        <label for="password">Password</label>
+        <input type="password" name="_password" style="background: rgba(85, 84, 81, 0.1);" id="password" class="form-control rounded-2xl py-1 px-3 flex justify-center w-46 items-center mb-5" autocomplete="current-password" required>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}">
+
+        {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
+
+            <div class="checkbox mb-3">
+                <input type="checkbox" name="_remember_me" id="_remember_me">
+                <label for="_remember_me">Remember me</label>
+            </div>
+        #}
+
+        <button class="btn btn-lg btn-primary bg-amber-300 rounded-2xl text-center text-black font-semibold p-3" type="submit">
+            Sign in
+        </button>
+        <a class="btn btn-lg btn-primary bg-amber-300 rounded-2xl text-center text-black font-semibold p-3 m-6" href="{{ path('app_register')}}"> Register </a>
+        {% endif %}
+    </form>
+</main>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Registration {% endblock %}
+
+{% block body %}
+<main class="flex flex-col items-center h-screen">
+
+<div class="mt-8 max-w-xl mx-auto">
+    <h1 class="text-3xl text-center text-white font-semibold mb-8"> Register </h1>
+
+    {{ form_errors(registrationForm) }}
+    {{ form_start(registrationForm) }}
+
+    <!-- Enter username -->
+    <div>
+    {{ form_row(registrationForm.username, {'attr': {'class':'rounded-2xl py-1 px-3 flex justify-center w-46 items-center mb-5',
+                                            'style':'background: rgba(85, 84, 81, 0.1);'} }) }}
+    </div>
+
+    <!-- Enter password -->
+    <div class="flex flex-col mb-3">
+    {{ form_row(registrationForm.plainPassword, {'attr': {'class':'rounded-2xl py-1 px-3 flex justify-center w-46 items-center mb-5',
+                                                'style':'background: rgba(85, 84, 81, 0.1);'},
+                                                'label':'Password' }) }}
+    </div>
+
+    <!-- Agree Terms -->
+    <div class="flex items-center space-x-2 mb-5">
+    {{ form_widget(registrationForm.agreeTerms, {
+        'attr': {
+            'class': 'appearance-none w-4 h-4 border border-blue-500 rounded bg-transparent hover:bg-blue-100 checked:bg-blue-300 checked:border-blue-700 transition-all'
+        }
+    }) }}
+    {{ form_label(registrationForm.agreeTerms, 'I agree to the terms') }}
+    </div>
+
+
+    <!-- Submit -->
+    <button type="submit" class="btn bg-amber-300 rounded-2xl text-center text-black font-semibold p-3">Register</button>
+
+    {{ form_end(registrationForm) }}
+</div>
+
+</main>
+{% endblock %}

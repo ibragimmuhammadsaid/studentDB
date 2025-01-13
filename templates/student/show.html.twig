@@ -15,20 +15,24 @@
 
 <!-- Student Deletion -->
 <div class="my-4 px-8">
+{% if is_granted('ROLE_DEAN') %}
     {{ form_start(form) }}
         <button type="submit" class="bg-red-500 hover:bg-gray-200 rounded-xl p-2 text-black font-semibold">
             Delete
         </button>
     {{ form_end(form) }}
+{% endif %}
 </div>
 <!-- Student Deletion -->
 
 <!-- Student Edit -->
+{% if is_granted('ROLE_DEAN') %}
 <div class="my-4 px-8">
     <a class="bg-green-400 hover:bg-gray-200 rounded-xl p-2 text-black font-semibold" href="{{ path('edit_student', { 'id': student.id }) }}">
         Edit
     </a>
 </div>
+{% endif %}
 <!-- Student Edit -->
 
 <div class="md:flex justify-center space-x-3 mt-5 px-4 lg:px-8">
